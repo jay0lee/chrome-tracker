@@ -98,17 +98,20 @@
             let channel = values[4];
             let version = entry.version;
             let fraction = entry.fraction;
+            let ended = entry.serving.endTime;
             if (!fraction) {
+              fraction = 0;
+            }
+            let color = determine_color(fraction, ended)
+            if (fraction == 0) {
               fraction = 'n/a';
-            } else {
+            else {
               fraction = `${fraction*100}%`;
             }
             let started = entry.serving.startTime;
-            let ended = entry.serving.endTime;
             if (!ended) {
               ended = '-';
             }
-            let color = determine_color(fraction, ended)
             let td_string = `<tr color="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${fraction}</td><td>${started}</td><td>${ended}</td></tr>`
             $('#releases > tbody tr:last').after(td_string);
         })
