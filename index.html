@@ -15,16 +15,22 @@
     };
     xhr.send();
 };
-      
-getJSON('https://versionhistory.googleapis.com/v1/chrome/platforms',
-function(err, data) {
-  if (err !== null) {
-    alert('Something went wrong: ' + err);
-  } else {
-    alert('Your query count: ' + data.query.count);
-  }
+
+function onClick() {
+    getJSON('https://versionhistory.googleapis.com/v1/chrome/platforms',
+            function(err, data) {
+    if (err !== null) {
+        alert('Something went wrong: ' + err);
+    } else {
+        alert('Your query count: ' + data.query.count);
+    }
 });
+}
       </source>
       </head>
-      <body></body>
+      <body>
+        <h1>A Web Page</h1>
+<p id="demo">A Paragraph</p>
+<button type="button" onclick="onClick()">Try it</button>
+      </body>
       <html>
