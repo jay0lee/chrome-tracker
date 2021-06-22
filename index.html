@@ -42,6 +42,7 @@
   </script>
   
   <select id="versions-dropdown" name="versions"></select>
+  filter: <textarea id="filter" name="filter" rows="1" columns="50"></textarea>
   <button type="button" onclick="onClick()">Update</button>
   <script>
     let versions = $('#versions-dropdown');
@@ -61,7 +62,6 @@
   </script>
   <script>
   function determine_color(fraction, ended) {
-    console.log(fraction, ended);
     if (ended !== '-') {
       return ''
     } else if (fraction < 1) {
@@ -88,9 +88,12 @@
       selected_version = 'all';
     }
     
-    console.log(selected_platform, selected_channel, selected_version);
     
     let releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=starttime desc`
+    let filter = $('#filter').val();
+    if (filter) {
+      releases_url = releases_url.concat(`&filter=${filter}`)
+    }
     console.log(releases_url);
     $.getJSON(releases_url, function (data) {
         $.each(data.releases, function (key, entry) {
