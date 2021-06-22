@@ -60,6 +60,16 @@
 });
   </script>
   <script>
+  function determine_color(fraction, ended) {
+    if (ended !== '-') {
+      return 'RED'
+    } else if (fraction < 1) {
+      return 'YELLOW'
+    } else {
+      return 'GREEN'
+    }
+  }
+
   function onClick() {
     $('#releases').find('tbody').detach();
     $('#releases').append($('<tbody><tr></tr></tbody>'));
@@ -98,7 +108,8 @@
             if (!ended) {
               ended = '-';
             }
-            let td_string = `<tr><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${fraction}</td><td>${started}</td><td>${ended}</td></tr>`
+            let color = determine_color(fraction, ended)
+            let td_string = `<tr color="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${fraction}</td><td>${started}</td><td>${ended}</td></tr>`
             $('#releases > tbody tr:last').after(td_string);
         })
   
