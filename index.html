@@ -104,17 +104,23 @@
             }
             let ended = entry.serving.endTime;
             if (!ended) {
-              ended = '-';
+              ended_date = '-';
+              ended_time = '';
+            } else {
+              ended = new Date(ended);
+              ended_date = ended.toDateString();
+              ended_time = ended.toTimeString();
             }
-            
             let color = determine_color(fraction, ended)
             if (fraction == 0) {
               fraction = 'n/a';
             } else {
               fraction = `${fraction*100}%`;
             }
-            let started = entry.serving.startTime;
-            let td_string = `<tr bgcolor="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${fraction}</td><td>${started}</td><td>${ended}</td></tr>`
+            let started = new Date(entry.serving.startTime);
+            started_date = started.toDateString();
+            started_time = started.toTimeString();
+            let td_string = `<tr bgcolor="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${fraction}</td><td title="${started_time}">${started_date}</td><td title="${ended_time}">${ended_date}</td></tr>`
             $('#releases > tbody tr:last').after(td_string);
         })
   
@@ -135,9 +141,6 @@
       </thead>
       <tbody><tr></tr></tbody>
     </table>
-  <br>
-  Yellow highlight shows most recent versions serving at less than 100% fraction.<br>
-  Green highlight shows most recent versions serving to 100% of global users.
   <h3>Glossary of terms:</h3>
   <ul>
     <li><b>Fraction</b> - percentage of global users who will receive this version during the given release time. Some platforms like Linux and iOS do not follow fractional rollouts.</li>
