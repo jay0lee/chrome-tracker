@@ -125,15 +125,16 @@
             }
             let color = determine_color(fraction, ended)
             if (fraction == 0) {
-              fraction = 'n/a';
+              var pct = 'n/a';
             } else {
-              fraction = fraction.toFixed([2]) * 100
-              fraction = `${fraction}%`;
+              var pct = fraction * 100
+              pct = pct.toFixed([2])
+              pct = `${pct}%`;
             }
             let started = new Date(entry.serving.startTime);
             started_date = started.toDateString();
             started_time = started.toTimeString();
-            let td_string = `<tr bgcolor="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${fraction}</td><td title="${started_time}">${started_date}</td><td title="${ended_time}">${ended_date}</td></tr>`
+            let td_string = `<tr bgcolor="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${pct}</td><td title="${started_time}">${started_date}</td><td title="${ended_time}">${ended_date}</td></tr>`
             $('#releases > tbody tr:last').after(td_string);
         })
   
