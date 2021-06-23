@@ -11,9 +11,41 @@
   gtag('js', new Date());
   gtag('config', 'G-Q207BJNC8X');
 </script>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+  #table_glossary {
+    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    justify-content: space-around;
+  }
+  table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+  }
+  th {
+    text-align: center;
+  }
+  th, td {
+    padding: 0.1em;
+  }
+  .full_release {
+    color: #000;
+  }
+  .partial_release {
+    color: #666;
+  }
+  #table_glossary > div {
+    max-width: 50em;
+  }
+</style>
 </head>
 <body>
-  
   <select id="platforms-dropdown" name="platforms"></select>
   <script>
     let platforms = $('#platforms-dropdown');
@@ -101,6 +133,7 @@
     if (filter) {
       releases_url = releases_url.concat(`&filter=${filter}`)
     }
+    let dateFormat = new Intl.DateTimeFormat();
     $.getJSON(releases_url, function (data) {
         $.each(data.releases, function (key, entry) {
             let values = entry.name.split('/');
@@ -118,24 +151,25 @@
               ended_time = '';
             } else {
               ended = new Date(ended);
-              ended_date = ended.toDateString();
+              ended_date = dateFormat.format(ended);
               ended_time = ended.toTimeString();
             }
             let color = determine_color(fraction, ended)
             var pct = fraction * 100
             pct = pct.toFixed([0])
             pct = `${pct}%`;
+            let tr_class = pct == "100%" ? "full_release" : "partial_release";
             let started = new Date(entry.serving.startTime);
-            started_date = started.toDateString();
+            started_date = dateFormat.format(started);
             started_time = started.toTimeString();
-            let td_string = `<tr bgcolor="${color}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${pct}</td><td title="${started_time}">${started_date}</td><td title="${ended_time}">${ended_date}</td></tr>`
+            let td_string = `<tr bgcolor="${color}" class="${tr_class}"><td>${platform}</td><td>${channel}</td><td>${version}</td><td>${pct}</td><td title="${started_time}">${started_date}</td><td title="${ended_time}">${ended_date}</td></tr>`
             $('#releases > tbody tr:last').after(td_string);
         })
   
     })
   }
-    </script>
-    <br><br>
+  </script>
+  <div id="table_glossary">
     <table id="releases" style="text-align:right" border="1">
       <thead>
         <tr>
@@ -149,17 +183,19 @@
       </thead>
       <tbody><tr></tr></tbody>
     </table>
-  <br>
-  Yellow highlight shows most recent versions serving at less than 100% fraction.<br>
-  Green highlight shows most recent versions serving to 100% of global users.
-  <h3>Glossary of terms:</h3>
-  <ul>
-    <li><b>Fraction</b> - percentage of global users who will receive this version during the given release time. Some platforms like Linux and iOS do not follow fractional rollouts.</li>
-    <li><b>Start/End</b> - when a release first became available and when it was replaced with a newer release. Note that ended versions are still available via version pinning.</li>
-    <li><b>Webview</b> - <a href="https://play.google.com/store/apps/details?id=com.google.android.webview&hl=en_US&gl=US">Android app</a> which provides other apps with web page rendering services. This is a separate Android app from Chrome itself but uses the same Chrome source.</li>
-    <li><b>LaCros</b> - <a href="https://chromium.googlesource.com/chromium/src.git/+/refs/heads/main/docs/lacros.md">Chrome OS project</a> to decouple the device OS and browser.</li>
-    <li><b>Canary ASAN</b> - <a href"https://developer.chrome.com/docs/versionhistory/reference/#:~:text=canary_asan%20is%20a%20fraction%20of%20the%20canary%20population%20that%20receives%20a%20variant%20build%20of%20chrome.%20this%20variant%20build%20has%20more%20diagnostics%20capabilities%20enabled%20which%20makes%20it%20better%20at%20uncovering%20bugs.">Special canary build</a> meant to help uncover bugs in canary releases.</li>
-  </ul>
+    <div>
+      Yellow highlight shows most recent versions serving at less than 100% fraction.<br>
+      Green highlight shows most recent versions serving to 100% of global users.
+      <h3>Glossary of terms:</h3>
+      <ul>
+        <li><b>Fraction</b> - percentage of global users who will receive this version during the given release time. Some platforms like Linux and iOS do not follow fractional rollouts.</li>
+        <li><b>Start/End</b> - when a release first became available and when it was replaced with a newer release. Note that ended versions are still available via version pinning.</li>
+        <li><b>Webview</b> - <a href="https://play.google.com/store/apps/details?id=com.google.android.webview&hl=en_US&gl=US">Android app</a> which provides other apps with web page rendering services. This is a separate Android app from Chrome itself but uses the same Chrome source.</li>
+        <li><b>LaCros</b> - <a href="https://chromium.googlesource.com/chromium/src.git/+/refs/heads/main/docs/lacros.md">Chrome OS project</a> to decouple the device OS and browser.</li>
+        <li><b>Canary ASAN</b> - <a href"https://developer.chrome.com/docs/versionhistory/reference/#:~:text=canary_asan%20is%20a%20fraction%20of%20the%20canary%20population%20that%20receives%20a%20variant%20build%20of%20chrome.%20this%20variant%20build%20has%20more%20diagnostics%20capabilities%20enabled%20which%20makes%20it%20better%20at%20uncovering%20bugs.">Special canary build</a> meant to help uncover bugs in canary releases.</li>
+      </ul>
+    <div>
+  </div>
   <a href="/">Chrome Tracker</a> uses the <a href="https://developer.chrome.com/docs/versionhistory/guide/">Chrome Version History</a> API and is hosted <a href="https://github.com/jay0lee/chrome-tracker">on GitHub</a>. Pull requests are welcome!
 </body>
 </html>
