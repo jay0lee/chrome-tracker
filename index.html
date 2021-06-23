@@ -20,7 +20,7 @@
     platforms.empty();
     platforms.append('<option selected="true" value="all">Choose Platform</option>');
     platforms.prop('selectedIndex', 0);
-    const platform_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms';
+    const platform_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms?fields=platforms/platform';
     $.getJSON(platform_url, function (data) {
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
@@ -35,7 +35,7 @@
     channels.empty();
     channels.append('<option selected="true" value="all">Choose Channel</option>');
     channels.prop('selectedIndex', 0);
-    const channel_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels';
+    const channel_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels?fields=channels/channel';
     let uniquechannels = [];
     $.getJSON(channel_url, function (data) {
         $.each(data.channels, function (key, entry) {
@@ -56,7 +56,7 @@
     versions.empty();
     versions.append('<option selected="true" value="all">Choose Version</option>');
     versions.prop('selectedIndex', 0);
-    const version_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions';
+    const version_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions?fields=versions/version';
     let uniqueversions = [];
     $.getJSON(version_url, function (data) {
         $.each(data.versions, function (key, entry) {
