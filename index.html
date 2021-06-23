@@ -101,7 +101,6 @@
     if (filter) {
       releases_url = releases_url.concat(`&filter=${filter}`)
     }
-    console.log(releases_url);
     $.getJSON(releases_url, function (data) {
         $.each(data.releases, function (key, entry) {
             let values = entry.name.split('/');
@@ -112,7 +111,6 @@
             if (!fraction) {
               fraction = 0;
             }
-            console.log(fraction)
             let ended = entry.serving.endTime;
             if (!ended) {
               ended = '-';
