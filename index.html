@@ -112,7 +112,6 @@
             if (!fraction) {
               fraction = 0;
             }
-            fraction = fraction.toFixed([2]) * 1
             console.log(fraction)
             let ended = entry.serving.endTime;
             if (!ended) {
@@ -128,7 +127,8 @@
             if (fraction == 0) {
               fraction = 'n/a';
             } else {
-              fraction = `${fraction * 100}%`;
+              fraction = fraction.toFixed([2]) * 100
+              fraction = `${fraction}%`;
             }
             let started = new Date(entry.serving.startTime);
             started_date = started.toDateString();
