@@ -124,13 +124,9 @@
               ended_time = ended.toTimeString();
             }
             let color = determine_color(fraction, ended)
-            if (fraction == 0) {
-              var pct = 'n/a';
-            } else {
-              var pct = fraction * 100
-              pct = pct.toFixed([0])
-              pct = `${pct}%`;
-            }
+            var pct = fraction * 100
+            pct = pct.toFixed([0])
+            pct = `${pct}%`;
             let started = new Date(entry.serving.startTime);
             started_date = started.toDateString();
             started_time = started.toTimeString();
