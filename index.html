@@ -52,7 +52,8 @@
     platforms.empty();
     platforms.append('<option selected="true" value="all">Choose Platform</option>');
     platforms.prop('selectedIndex', 0);
-    const platform_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms?fields=platforms/platformType';
+    let key = 'AIzaSyB3fy8TLQQgbDrf6vYe1QUsWiMhtuk_La0'
+    const platform_url = `https://versionhistory.googleapis.com/v1/chrome/platforms?fields=platforms/platformType?key={key}`;
     $.getJSON(platform_url, function (data) {
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
@@ -67,7 +68,7 @@
     channels.empty();
     channels.append('<option selected="true" value="all">Choose Channel</option>');
     channels.prop('selectedIndex', 0);
-    const channel_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels?fields=channels/channelType';
+	  const channel_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels?fields=channels/channelType&key={key}`;
     let uniquechannels = [];
     $.getJSON(channel_url, function (data) {
         $.each(data.channels, function (key, entry) {
@@ -88,7 +89,7 @@
     versions.empty();
     versions.append('<option selected="true" value="all">Choose Version</option>');
     versions.prop('selectedIndex', 0);
-    const version_url = 'https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions?fields=versions/version';
+	  const version_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions?fields=versions/version&key={key}`;
     let uniqueversions = [];
     $.getJSON(version_url, function (data) {
         $.each(data.versions, function (key, entry) {
@@ -128,7 +129,7 @@
     }
     
     
-    let releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=starttime desc`
+		    let releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=starttime desc&key={key}`
     let filter = $('#filter').val();
     if (filter) {
       releases_url = releases_url.concat(`&filter=${filter}`)
