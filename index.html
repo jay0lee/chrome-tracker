@@ -53,7 +53,7 @@
     platforms.append('<option selected="true" value="all">Choose Platform</option>');
     platforms.prop('selectedIndex', 0);
     var key = 'AIzaSyB3fy8TLQQgbDrf6vYe1QUsWiMhtuk_La0'
-    var platform_url = `https://versionhistory.googleapis.com/v1/chrome/platforms?fields=platforms/platformType?key={key}`;
+    var platform_url = `https://versionhistory.googleapis.com/v1/chrome/platforms?fields=platforms/platformType&key=${key}`;
     $.getJSON(platform_url, function (data) {
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
@@ -68,7 +68,7 @@
     channels.empty();
     channels.append('<option selected="true" value="all">Choose Channel</option>');
     channels.prop('selectedIndex', 0);
-    var channel_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels?fields=channels/channelType&key={key}`;
+    var channel_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels?fields=channels/channelType&key=${key}`;
     var uniquechannels = [];
     $.getJSON(channel_url, function (data) {
         $.each(data.channels, function (key, entry) {
@@ -89,7 +89,7 @@
     versions.empty();
     versions.append('<option selected="true" value="all">Choose Version</option>');
     versions.prop('selectedIndex', 0);
-    var version_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions?fields=versions/version&key={key}`;
+    var version_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions?fields=versions/version&key=${key}`;
     var uniqueversions = [];
     $.getJSON(version_url, function (data) {
         $.each(data.versions, function (key, entry) {
@@ -129,7 +129,7 @@
     }
     
     
-    var  releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=starttime desc&key={key}`
+    var  releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=starttime desc&key=${key}`
     var filter = $('#filter').val();
     if (filter) {
       releases_url = releases_url.concat(`&filter=${filter}`)
