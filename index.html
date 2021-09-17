@@ -131,7 +131,7 @@
         selected_version = $('#versions-dropdown').val();
     }
     
-    var  releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=platform desc,starttime desc,channel desc&key=${key}`
+    var  releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=platform desc,starttime desc,channel asc&key=${key}`
     var filter = $('#filter').val();
     if (filter) {
       releases_url = releases_url.concat(`&filter=${filter}`)
