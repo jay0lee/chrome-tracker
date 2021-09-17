@@ -45,7 +45,7 @@
   }
 </style>
 </head>
-<body>
+<body onload="onClick(null, 'stable', null);">
   <select id="platforms-dropdown" name="platforms"></select>
   <script>
     var platforms = $('#platforms-dropdown');
@@ -74,7 +74,11 @@
         $.each(data.channels, function (key, entry) {
             channel = entry.channelType.toLowerCase();
             if(jQuery.inArray(channel, uniquechannels) == -1) {
-                channels.append($('<option></option>').attr('value', channel).text(channel));
+                add_channel = $('<option></option>').attr('value', channel).text(channel)
+                if (channel == 'stable') {
+                    add_channel.attr('selected', true)
+                }
+                channels.append(add_channel);
                 uniquechannels.push(channel);
             }
   })
@@ -82,7 +86,7 @@
   </script>
   
   <select id="versions-dropdown" name="versions"></select>
-  <a href="https://developer.chrome.com/docs/versionhistory/reference/#filter">filter</a>: <input id="filter" name="filter" rows="1" columns="50"></textarea>
+  <a href="https://developer.chrome.com/docs/versionhistory/reference/#filter">filter</a>: <input id="filter" name="filter" value="endtime=none" rows="1" columns="50">
   <button type="button" onclick="onClick()">Update</button>
   <script>
     var versions = $('#versions-dropdown');
@@ -111,23 +115,21 @@
     }
   }
 
-  function onClick() {
+  function onClick(selected_platform, selected_channel, selected_version) {
     $('#releases').find('tbody').detach();
     $('#releases').append($('<tbody><tr></tr></tbody>'));
-    var selected_platform = $('#platforms-dropdown').val();
-    var selected_channel = $('#channels-dropdown').val();
-    var selected_version = $('#versions-dropdown').val();
-  
-    if (!selected_platform) {
-      selected_platform = 'all';
-    }
-    if (!selected_channel) {
-      selected_channel = 'all';
-    }
-    if (!selected_version) {
-      selected_version = 'all';
+
+    if ( selected_platform == null ) {
+        selected_platform = $('#platforms-dropdown').val();
     }
     
+    if ( selected_channel == null ) {
+        selected_channel = $('#channels-dropdown').val();
+    }
+    
+    if ( selected_version == null ) {
+        selected_version = $('#versions-dropdown').val();
+    }
     
     var  releases_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/${selected_platform}/channels/${selected_channel}/versions/${selected_version}/releases?order_by=starttime desc&key=${key}`
     var filter = $('#filter').val();
