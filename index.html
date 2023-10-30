@@ -159,7 +159,7 @@
             }
             var color = determine_color(fraction, ended)
             var pct = fraction * 100
-            pct = pct.toFixed([0])
+            pct = pct.toFixed([2])
             pct = `${pct}%`;
             var tr_class = pct == "100%" ? "full_release" : "partial_release";
             var started = new Date(entry.serving.startTime);
