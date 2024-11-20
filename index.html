@@ -58,7 +58,7 @@
         data.platforms.sort()
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
-            if (! platform.startsWith("lacros") && ! platform.startswith("fuschia")) {
+            if (! platform.startsWith("lacros") && ! platform.startsWith("fuschia")) {
                 platforms.append($('<option></option>').attr('value', platform).text(platform));
             }
         })
