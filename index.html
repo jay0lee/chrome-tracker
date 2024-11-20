@@ -57,10 +57,9 @@
     $.getJSON(platform_url, function (data) {
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
-            if (platform.startsWith("lacros")) {
-                continue
+            if (! platform.startsWith("lacros")) {
+                platforms.append($('<option></option>').attr('value', platform).text(platform));
             }
-            platforms.append($('<option></option>').attr('value', platform).text(platform));
   })
 });
   </script>
