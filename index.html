@@ -55,7 +55,7 @@
     var key = 'AIzaSyB3fy8TLQQgbDrf6vYe1QUsWiMhtuk_La0'
     var platform_url = `https://versionhistory.googleapis.com/v1/chrome/platforms?fields=platforms/platformType&key=${key}`;
     $.getJSON(platform_url, function (data) {
-        data.platforms.sort()
+        data.platforms.sort((a, b) => a.platformType.localeCompare(b.platformType));
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
             if (! platform.startsWith("lacros") && ! platform.startsWith("fuschia")) {
