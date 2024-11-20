@@ -144,6 +144,10 @@
         $.each(data.releases, function (key, entry) {
             var values = entry.name.split('/');
             var platform = values[2];
+            if (platform.startsWith("lacros") || platform.startsWith("fuschia")) {
+                // continue
+                return true;
+            }
             var channel = values[4];
             var version = entry.version;
             var fraction = entry.fraction;
