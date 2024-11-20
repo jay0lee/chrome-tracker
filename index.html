@@ -74,6 +74,7 @@
     var channel_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels?fields=channels/channelType&key=${key}`;
     var uniquechannels = [];
     $.getJSON(channel_url, function (data) {
+        data.channels.sort((a, b) => a.channelType.localeCompare(b.channelType));
         $.each(data.channels, function (key, entry) {
             channel = entry.channelType.toLowerCase();
             if(jQuery.inArray(channel, uniquechannels) == -1) {
@@ -141,6 +142,7 @@
     }
     var dateFormat = new Intl.DateTimeFormat();
     $.getJSON(releases_url, function (data) {
+        data.releases.sort((a, b) => a.name.localeCompare(b.name));
         $.each(data.releases, function (key, entry) {
             var values = entry.name.split('/');
             var platform = values[2];
