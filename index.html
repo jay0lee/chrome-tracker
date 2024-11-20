@@ -58,7 +58,7 @@
         data.platforms.sort((a, b) => a.platformType.localeCompare(b.platformType));
         $.each(data.platforms, function (key, entry) {
             platform = entry.platformType.toLowerCase();
-            if (! platform.startsWith("lacros") && ! platform.startsWith("fuschia")) {
+            if (! platform.startsWith("lacros") && ! platform.startsWith("fuchsia")) {
                 platforms.append($('<option></option>').attr('value', platform).text(platform));
             }
         })
@@ -146,7 +146,7 @@
         $.each(data.releases, function (key, entry) {
             var values = entry.name.split('/');
             var platform = values[2];
-            if (platform.startsWith("lacros") || platform.startsWith("fuschia")) {
+            if (platform.startsWith("lacros") || platform.startsWith("fuchsia")) {
                 // continue
                 return true;
             }
