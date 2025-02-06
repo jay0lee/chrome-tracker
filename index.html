@@ -100,6 +100,7 @@
     var version_url = `https://versionhistory.googleapis.com/v1/chrome/platforms/all/channels/all/versions?fields=versions/version&key=${key}`;
     var uniqueversions = [];
     $.getJSON(version_url, function (data) {
+        data.versions.sort((a, b) => a.version.localeCompare(b.version));
         $.each(data.versions, function (key, entry) {
             if(jQuery.inArray(entry.version, uniqueversions) == -1) {
                 versions.append($('<option></option>').attr('value', entry.version).text(entry.version));
